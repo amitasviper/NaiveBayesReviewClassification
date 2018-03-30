@@ -63,12 +63,12 @@ def calculateMetrics(predicted, actual):
 
 	global total_f1
 	total_f1 = 0
-	calculateForClass('True', true_mat)
-	calculateForClass('Fake', fake_mat)
-	calculateForClass('Pos', pos_mat)
 	calculateForClass('Neg', neg_mat)
+	calculateForClass('True', true_mat)
+	calculateForClass('Pos', pos_mat)
+	calculateForClass('Fake', fake_mat)
 
-	print "\nMean. F1 : %.3f"% (total_f1/4.0)
+	print "\nMean. F1 : %.4f"% (total_f1/4.0)
 
 
 def computeAccuracy(predicted, expected):
@@ -78,12 +78,16 @@ def computeAccuracy(predicted, expected):
 		if exp == pred:
 			correct += 1
 		total += 1
-	print "Accuracy : %.3f %%"%(correct*100.0/total)
+	print "Accuracy : %.4f %%"%(correct*100.0/total)
+
+def getFileFromCommandLine(num):
+	filename = sys.argv[num]
+	return getFileContents(filename)
 
 
 if __name__ == '__main__':
 	total_f1 = 0
-	predicted = getFileContents('nboutput.txt')
-	actual = getFileContents('data/dev-key.txt')
+	actual = getFileFromCommandLine(1)
+	predicted = getFileFromCommandLine(2)
 	calculateMetrics(predicted, actual)
 	computeAccuracy(predicted, actual)
